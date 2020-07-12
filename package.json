@@ -1,0 +1,35 @@
+{
+    "name": "multi-factor-authentication",
+    "version": "1.0.0",
+    "description": "MFA App",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test\" && exit 1",
+        "start": "node server.js"
+    },
+    "keywords": [
+        "MEAN",
+        "stack"
+    ],
+    "author": "CkoMi",
+    "license": "ISC",
+    "dependencies": {
+        "address": "^1.1.2",
+        "bcrypt-nodejs": "0.0.3",
+        "body-parser": "^1.15.2",
+        "express": "^4.14.0",
+        "jsonwebtoken": "^7.1.9",
+        "macaddress": "^0.5.1",
+        "mongoose": "^4.6.0",
+        "mongoose-title-case": "0.0.4",
+        "mongoose-validator": "^1.2.5",
+        "morgan": "^1.7.0",
+        "nodemailer": "^2.7.0",
+        "nodemailer-sendgrid-transport": "^0.2.0",
+        "passport": "^0.3.2",
+        "passport-facebook": "^2.1.1",
+        "passport-google-oauth": "^1.0.0",
+        "passport-twitter": "^1.0.4",
+        "speakeasy": "^2.0.0"
+    }
+}

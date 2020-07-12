@@ -1,0 +1,37 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Forgot Username</h2>
+        <h3 class="section-subheading text-muted">Type your e-mail address to request a username to your e-mail inbox.</h3>
+    </div>
+</div>
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="userForm" id="contactForm" ng-submit="username.sendUsername(userData, userForm.$valid);" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <!-- E-mail Input -->
+                            <div class="form-group text-left">
+                                <label>Email:</label>
+                                <input ng-disabled="username.disabled" class="form-control" type="text" name="email" placeholder="email *" ng-model="username.userData.email" required>
+                            </div>
+                            <!-- Submit Button -->
+                            <button ng-disabled="username.disabled" type="submit" class="btn btn-xl">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <!-- Loading Icon -->
+        <div class="jumbotron text-center " ng-show="main.loading ">
+            <div class="spinerLoader"></div>
+        </div>
+        <!-- Custom Messages -->
+        <div class="row show-hide-message" ng-show="username.successMsg || username.errorMsg">
+            <div ng-class="alert">{{ username.successMsg || username.errorMsg }}</div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,91 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Dashboard</h2>
+        <h3 class="section-subheading text-muted">Hello <strong>{{ main.justName }}</strong>, here you can manage users!</h3>
+    </div>
+</div>
+<br>
+<!-- Loading Icon -->
+<div class="jumbotron text-center " ng-show="main.loading ">
+    <div class="spinerLoader"></div>
+</div>
+<br>
+<div class="container">
+    <div class="navbar-form" id="searchSection">
+        <div class="form-group text-left col-md-8">
+            <!-- Search Input -->
+            <input type="text" class="form-control" name="search" placeholder="Search for..." ng-model="searchKeyword">
+        </div>
+        <div class="text-center">
+            <!-- Serach Button -->
+            <button type="button" ng-click="management.search(searchKeyword, number);" class="btn btn-default searchBtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <!-- Clear Button -->
+            <button type="button" ng-click="management.clear();" class="btn btn-default searchTrashBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <!-- Advanced Search Button -->
+            <a href="/search">
+                <button type="button" class="btn btn-default advancedBtn">ADVANCED</button>
+            </a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row text-left">
+    <!-- Total Search Results -->
+    <div class="managmentDisplayTotal" ng-show="searchFilter !== undefined">
+        <p><strong>Total: </strong>{{ (management.users | filter: searchFilter).length }}</p>
+    </div>
+    <!-- Results Being Shown -->
+    <div class="managmentDisplayShowing" ng-show="searchFilter !== undefined">
+        <p><strong>Showing: </strong>{{( management.users | filter: searchFilter | limitTo: management.limit).length }}</p>
+    </div>
+</div>
+<br>
+<!-- User Management -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <strong>User Management</strong>
+    </div>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="person in management.users | filter: searchFilter | limitTo: management.limit">
+            <td class="text-left tablePadder">{{ person.name }}</td>
+            <td class="text-left tablePadder wordBreaker">{{ person.username }}</td>
+            <td class="text-left wordBreaker tablePadder">{{ person.email }}</td>
+            <td class="text-right">
+                <!-- Edit Button -->
+                <a href="/edit/{{ person._id }}"><button type="button" ng-show="management.editAccess" class="btn btn-primary"><i class="fa fa-wrench" aria-hidden="true"></i></button></a>
+                <!-- Delete Button -->
+                <button type="button" ng-click="management.deleteUser(person.username);" ng-show="management.deleteAccess" class="btn btn-danger managmentDeleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>
+<!-- Filter Input -->
+<div class="col-md-6" id="displayContents">
+    <div class="col-xs-6">
+        <div class="input-group">
+            <span class="input-group-addon">Display:</span>
+            <input type="text" class="form-control" ng-model="number">
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <!-- Show Button Filter -->
+        <button type="button" ng-click="management.showMore(number);" class="btn btn-success searchBtn">Show</button>
+        <!-- All Button -->
+        <button type="button" ng-click="management.showAll();" class="btn  advancedBtn">All</button>
+    </div>
+</div>
+<br>
+<br>
+<!-- Custom Error Message -->
+<div class="row show-hide-message" ng-show="management.showMoreError">
+    <div class="alert alert-danger">{{ management.showMoreError }}</div>
+</div>

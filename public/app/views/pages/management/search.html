@@ -1,0 +1,99 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Search Engine</h2>
+    </div>
+</div>
+<br>
+<!-- Loading Icon -->
+<div class="jumbotron text-center " ng-show="main.loading ">
+    <div class="spinerLoader"></div>
+</div>
+<br>
+<div id="completeSearchContainer">
+    <div class="searchInputs">
+        <!-- Name Search Box -->
+        <div class="" id="searchInputs">
+            <div class="input-group groupSpanStyler">
+                <span class="input-group-addon spanStyler">Name:</span>
+                <input type="text" class="form-control" name="searchByName" placeholder="search by..." ng-model="searchByName">
+
+            </div>
+        </div>
+        <!-- Username Search Box -->
+        <div class="" id="searchInputs">
+            <div class="input-group groupSpanStyler">
+                <span class="input-group-addon spanStyler">Username:</span>
+                <input type="text" class="form-control" name="searchByUsername" placeholder="search by..." ng-model="searchByUsername">
+
+            </div>
+        </div>
+        <!-- E-mail Search Box -->
+        <div class="" id="searchInputs">
+            <div class="input-group groupSpanStyler">
+                <span class="input-group-addon spanStyler">E-mail:</span>
+                <input type="text" class="form-control" name="searchByEmail" placeholder="search by..." ng-model="searchByEmail">
+            </div>
+        </div>
+    </div>
+    <!-- Right side -->
+    <div class="searchButtonsSearch text-left">
+        <!-- Search Button -->
+        <div class="searchButtonClick">
+            <button type="button" ng-click="management.advancedSearch(searchByUsername, searchByEmail, searchByName);" class="btn searchBtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+        <!-- Sort Order Dropdown Menu -->
+        <div class="btn-group sortDropdownSearch">
+            <button type="button" class="btn advancedBtn">Sort</button>
+            <button type="button" class="btn advancedBtn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+            <ul class="dropdown-menu">
+                <li><a ng-click="management.sortOrder('username');" href="#">Username</a></li>
+                <li><a ng-click="management.sortOrder('email');" href="#">E-mail</a></li>
+                <li><a ng-click="management.sortOrder('name');" href="#">Name</a></li>
+            </ul>
+        </div>
+        <!-- Search Results -->
+        <div id="searchResult" ng-show="management.searchLimit === undefined">
+            <p><strong>Results: </strong>{{ (management.users | filter: advancedSearchFilter | limitTo: management.searchLimit).length }}</p>
+        </div>
+        <!-- Sort Order Notification -->
+        <div id="searchSortResult" ng-show="management.sort">
+            <p><strong>Sort by: </strong>{{ management.sort }}</p>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- User Management -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <strong>User Management</strong>
+    </div>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="person in management.users | filter: advancedSearchFilter | limitTo: management.searchLimit | orderBy: management.sort">
+            <td class="text-left tablePadder">{{ person.name }}</td>
+            <td class="text-left tablePadder wordBreaker">{{ person.username }}</td>
+            <td class="text-left tablePadder wordBreaker">{{ person.email }}</td>
+            <td class="text-right">
+                <!-- Edit Button -->
+                <a href="/edit/{{ person._id }}"><button type="button" ng-show="management.editAccess" class="btn btn-primary"><i class="fa fa-wrench" aria-hidden="true"></i></button></a>
+                <!-- Delete Button -->
+                <button type="button" ng-click="management.deleteUser(person.username);" ng-show="management.deleteAccess" class="btn btn-danger managmentDeleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>

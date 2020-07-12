@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Multi-factor Authentication">
+    <meta name="author" content="Miomir Vukovic">
+
+    <!-- Bar Icon All Dimensions -->
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="assets/images/logobrand.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="assets/images/logobrand.png" />
+    <link rel="icon" type="image/png" href="assets/images/logobrand.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="assets/images/logobrand.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="assets/images/logobrand.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="assets/images/logobrand.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="assets/images/logobrand.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="assets/images/logobrand.png" />
+    <meta name="msapplication-square70x70logo" content="assets/images/logobrand.png" />
+    <meta name="msapplication-square150x150logo" content="assets/images/logobrand.png" />
+    <meta name="msapplication-wide310x150logo" content="assets/images/logobrand.png" />
+    <meta name="msapplication-square310x310logo" content="assets/images/logobrand.png" />
+
+    <!-- Main Angular Files -->
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-animate.js"></script>
+
+    <!-- Angular Config/Routes -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!-- Angular Controllers -->
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/emailCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+
+    <!-- Angular Services -->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+
+    <!-- Fa fa icons -->
+    <script src="https://use.fontawesome.com/a5e6ca425f.js"></script>
+
+    <!-- Cascade Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+
+    <title>MFA App</title>
+
+</head>
+<!-- loadme ( mainCtrl.js) ukoliko angular nije obradio podatke ne prikazuj -->
+<!-- loadme ( mainCtrl.js) if angular didn't prepare content-->
+
+<body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
+    <!--==================================================================== NAVIGATION BAR ====================================================================-->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+        <div class="container">
+            <!-- Brand and toggle for mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="/"></a>
+            </div>
+            <!-- All nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden active">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li><a class="page-scroll" href="/" onClick="removeToggleClass();">Home</a></li>
+                    <li><a ng-show="!main.isLoggedIn" class="page-scroll" href="/login" onClick="removeToggleClass();">Login</a></li>
+                    <li><a ng-show="!main.isLoggedIn" class="page-scroll" href="/register" onClick="removeToggleClass();">Register</a></li>
+                    <li><a ng-show="main.isLoggedIn && main.authorized" class="page-scroll" href="/management" onClick="removeToggleClass();">Management</a></li>
+                    <li class="loggoutYellow"><a ng-show="main.isLoggedIn" class="page-scroll" href="#" ng-click="main.logout();" onClick="removeToggleClass();">Logout</a></li>
+                    <li class="liNavProfile" ng-show="main.isLoggedIn">
+                        <div class="userLogophy"></div>
+                        <a class="page-scroll" href="/profile" onClick="removeToggleClass();">{{ main.justName }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--==================================================================== HEADER ====================================================================-->
+    <header ng-show="main.home" onClick="removeToggleClass();">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-heading">Multi-Factor Authentication</div>
+                <div class="intro-lead-in">Based on standard Login with cheecking your device address and depending on that It'll ask you for 6-digit number If you're on new device</div>
+                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Login</a>
+                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn register">Register</a>
+                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
+                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn register">View</a>
+            </div>
+        </div>
+    </header>
+    <!--============================================================ SECTION FOR ANGULAR VIEW ===========================================================-->
+    <section id="services" onClick="removeToggleClass();">
+        <div class="container" style="top: 0;">
+            <div class="row">
+                <div ng-view></div>
+            </div>
+        </div>
+    </section>
+    <!--==================================================================== FOOTER  ====================================================================-->
+    <footer class="fixed-top" onClick="removeToggleClass();">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="copyright">Copyright © Miomir Vukovic</span>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-inline quicklinks">
+                        <li><a class="quicklinksA" href="#">Privacy Policy</a></li>
+                        <li><a class="quicklinksA">|</a></li>
+                        <li><a class="quicklinksA" href="#">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--================================================================ BOOTSTRAP MODAL ================================================================-->
+    <div class="modal fade text-center" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button ng-hide="main.hideButton" type="button" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ main.modalHeader }}</h4>
+                </div>
+                <br>
+                <div class="modal-body">
+                    <p>{{ main.modalBody }}</p>
+                    <div ng-show="main.hideButton" class="dizzy-gillespie"></div>
+                </div>
+                <br>
+                <!-- Modal 'Yes' & 'No' Buttons -->
+                <div class="modal-footer">
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--=============================================================== BOOTSTRAP CORE JS ===============================================================-->
+    <script src="assets/js/jquery-3.1.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+</body>
+
+</html>

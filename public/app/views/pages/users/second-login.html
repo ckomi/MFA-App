@@ -1,0 +1,43 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">New device</h2>
+        <h3 class="section-subheading text-muted">Check your e-mail inbox for 6-digit number</h3>
+    </div>
+</div>
+<!-- Second Login Section -->
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="sentMessage" id="contactForm" ng-submit="main.doSecondLogin(totpData);" novalidate>
+                    <div class="row">
+                        <!-- 6-digit number Input -->
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="form-group">
+                                <input ng-disabled="main.disabled" class="form-control text-center" type="number" name="totpPin" placeholder="Type your 6-digit number" ng-model="main.totpData.totpPin" autocomplete="off" ng-minlength="6" ng-maxlength="6" ng-pattern="/^[0-9]*$/" required>
+                                <ul ng-show="(!sentMessage.totpPin.$pristine && sentMessage.totpPin.$error.pattern) || (!sentMessage.totpPin.$pristine && sentMessage.totpPin.$error.minlength) || (!sentMessage.totpPin.$pristine && sentMessage.totpPin.$error.maxlength)" class="help-block">
+                                    <li class="secondErrorTyping">Your verification code must contain six numbers</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center col-md-offset-3">
+                            <div id="success "></div>
+                            <button type="submit " ng-disabled="(!main.totpData.totpPin) || (!sentMessage.totpPin.$pristine && sentMessage.totpPin.$error.minlength) || (!sentMessage.totpPin.$pristine && sentMessage.totpPin.$error.maxlength)" class="btn btn-xl ">Confirm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <!-- Loading Icon -->
+        <div class="jumbotron text-center " ng-show="main.loading ">
+            <div class="spinerLoader"></div>
+        </div>
+        <!-- Custom Messages -->
+        <div class="row show-hide-message" ng-show="main.successMsg || main.errorMsg">
+            <div ng-class="alert">{{ main.successMsg || main.errorMsg }}</div>&nbsp
+            </a>
+        </div>
+    </div>
+</section>

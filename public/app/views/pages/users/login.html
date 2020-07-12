@@ -1,0 +1,55 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Login</h2>
+        <h3 class="section-subheading text-muted">Please enter your login information.</h3>
+    </div>
+</div>
+<section id="contact">
+    <div class="container logregheading">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="sentMessage" id="contactForm" ng-submit="main.doLogin(loginData);" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <!-- Username Input -->
+                            <div class="form-group text-left">
+                                <label>Username:</label>
+                                <input ng-disabled="main.disabled" class="form-control" type="text" name="username" placeholder="username *" ng-model="main.loginData.username" autocomplete="off">
+                            </div>
+                            <!-- Password Input -->
+                            <div class="form-group text-left">
+                                <label>Password:</label>
+                                <input ng-disabled="main.disabled" class="form-control" type="password" name="password" placeholder="password *" ng-model="main.loginData.password">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-md-offset-3 ">
+                            <!-- Forgot Username/Password -->
+                            <div class="col-md-12">
+                                <a class="aForgot" href="/resetpassword " ng-disabled="main.disabled ">Forgot Password</a>&emsp; &emsp; &emsp;
+                                <a class="aForgot" href="/resetusername " ng-disabled="main.disabled ">Forgot Username</a>
+                            </div>
+                            <br>
+                            <br>
+                            <div id="success"></div>
+                            <!-- Login Button -->
+                            <button type="submit " ng-disabled="login.disabled || (!main.loginData.username) || (!main.loginData.password) " class="btn btn-xl ">login</button>
+                            <!-- Resend Button -->
+                            <a ng-show="main.expired" href="/resend" class="btn register">Resend Activation Link</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <!-- Loading Icon -->
+        <div class="jumbotron text-center " ng-show="main.loading ">
+            <div class="spinerLoader"></div>
+        </div>
+        <!-- Custom Messages -->
+        <div class="row show-hide-message " ng-show="main.successMsg || main.errorMsg ">
+            <div ng-class="alert " class="alert">{{ main.successMsg || main.errorMsg }}</div>&nbsp
+            </a>
+        </div>
+    </div>
+</section>

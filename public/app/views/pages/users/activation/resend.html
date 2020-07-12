@@ -1,0 +1,52 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Resend Activation Link</h2>
+        <h3 class="section-subheading text-muted">Please enter your username and password to request a new activation link.</h3>
+    </div>
+</div>
+<section id="contact">
+    <div class="container logregheading">
+        <div class="row">
+            <div class="col-lg-12">
+                <form ng-submit="resend.checkCredentials(loginData, resetForm.$valid);" name="resetForm" id="contactForm" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="form-group text-left">
+                                <div ng-class="{ 'has-success':(resetForm.username.$valid && !resetForm.username.$pristine), 'has-error':(!resetForm.username.$valid && !resetForm.username.$pristine) || (!resetForm.username.$valid && resetForm.$submitted) }">
+                                    <!-- Username Input -->
+                                    <label>Username:</label>
+                                    <input ng-disabled="reset.disabled" class="form-control" type="text" name="username" placeholder="Username *" ng-model="resend.loginData.username" required>
+                                    <!-- Username Validation -->
+                                    <p class="help-block" ng-show="(!resetForm.username.$pristine && resetForm.username.$error.required) || (resetForm.$submitted && resetForm.username.$error.required)">This field is required</p>
+                                </div>
+                                <br>
+                                <div ng-class="{ 'has-success':(resetForm.password.$valid && !resetForm.password.$pristine), 'has-error':(!resetForm.password.$valid && !resetForm.password.$pristine) || (!resetForm.password.$valid && resetForm.$submitted) }">
+                                    <!-- Password Input -->
+                                    <label>Password:</label>
+                                    <input ng-disabled="reset.disabled" class="form-control" type="password" name="password" placeholder="Password *" ng-model="resend.loginData.password" required>
+                                    <!-- Password Validation -->
+                                    <p class="help-block" ng-show="(!resetForm.password.$pristine && resetForm.password.$error.required) || (resetForm.$submitted && resetForm.password.$error.required)">This field is required</p>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Submit Button -->
+                            <button ng-disabled="(!resend.loginData.username) || (!resend.loginData.password)" class="btn btn-xl" type="submit">Resend Activation Link</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <!-- Loading Icon -->
+        <div class="jumbotron text-center " ng-show="main.loading ">
+            <div class="spinerLoader"></div>
+        </div>
+        <!-- Custom Messages -->
+        <div class="row show-hide-message" ng-show="resend.successMsg || resend.errorMsg">
+            <div ng-class="alert">{{ resend.successMsg || resend.errorMsg }}</div>
+        </div>
+    </div>
+</section>
